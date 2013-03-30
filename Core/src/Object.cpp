@@ -8,32 +8,8 @@ using std::get;
 using std::make_pair;
 using std::make_tuple;
 
-unordered_set<Object*> Object::objects;
-unordered_set<Object*> Object::tickableObjects;
-
-void Object::tickObjects(double delta) {
-    for(auto obj: tickableObjects) {
-        obj->tick(delta);
-        for(auto timer: obj->timers) {
-            get<1>(timer.second)+= delta;
-            if (get<1>(timer.second) >= get<0>(timer.second)) {
-                get<2>(timer.second)();
-                get<1>(timer.second)-= get<0>(timer.second);
-            }
-        }
-    }
-}
-
-void Object::drawObjects() {
-    for(auto obj: objects) {
-        obj->draw();
-    }
-}
-
 Object::Object(double xPos, double yPos, double velocity, double rotation) :
-    xPos(xPos), yPos(yPos), velocity(velocity), rotation(rotation) {
-    objects.insert(this);
-    tickableObjects.insert(this);
+    xPos(xPos), yPos(yPos), velocity(velocity), rotation(rotation), tickObject(true) {
 }
 
 double Object::getXPos() const {
@@ -62,11 +38,11 @@ void Object::removeTimer(const string& name) {
 }
 
 void Object::disableTick() {
-    tickableObjects.erase(this);
+    tickObject= false;
 }
 
 void Object::enableTick() {
-    tickableObjects.insert(this);
+    tickObject= true;
 }    
 
 void Object::translate(double xOffset, double yOffset) {
@@ -76,6 +52,17 @@ void Object::translate(double xOffset, double yOffset) {
 
 void Object::rotate(double angle) {
     rotation+= angle;
+}
+
+bool Object::tick(double delta) {
+    for(auto timer: timers) {
+        get<1>(timer.second)+= delta;
+        if (get<1>(timer.second) >= get<0>(timer.second)) {
+            get<2>(timer.second)();
+            get<1>(timer.second)-= get<0>(timer.second);
+        }
+    }
+    return true;
 }
 
 }

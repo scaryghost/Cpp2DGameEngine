@@ -5,25 +5,26 @@
 #include <string>
 #include <tuple>
 #include <unordered_map>
-#include <unordered_set>
 
 namespace etsai {
 namespace cpp2dgameengine {
+
+namespace util{
+class ObjectManager;
+}   //namespace util
+
 namespace core {
 
 using std::function;
 using std::string;
 using std::tuple;
 using std::unordered_map;
-using std::unordered_set;
+
 
 class Object {
 public:
     typedef function<void ()> TimerFunc;
 
-    static void tickObjects(double delta);
-    static void drawObjects();
-    
     Object(double xPos, double yPos, double velocity, double rotation);
 
     double getXPos() const;
@@ -45,15 +46,15 @@ protected:
     double velocity;
     double rotation;
 
-    virtual void tick(double delta)= 0;
+    virtual bool tick(double delta);
     virtual void draw()= 0;
 
 private:
+    bool tickObject;
     typedef tuple<double, double, TimerFunc> TimerInfo;
     unordered_map<string, TimerInfo> timers;
 
-    static unordered_set<Object*> objects;
-    static unordered_set<Object*> tickableObjects;
+    friend class util::ObjectManager;
 };
 
 }   //namespace core
