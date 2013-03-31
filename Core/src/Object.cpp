@@ -8,8 +8,27 @@ using std::get;
 using std::make_pair;
 using std::make_tuple;
 
+unordered_set<Object*> Object::createdObjects;
+
+void Object::tickObjects(double delta) {
+    for(auto obj: createdObjects) {
+        obj->tickObject && obj->tick(delta);
+    }
+}
+
+void Object::drawObjects() {
+    for(auto obj: createdObjects) {
+        obj->draw();
+    }
+}
+
 Object::Object(double xPos, double yPos, double velocity, double rotation) :
     xPos(xPos), yPos(yPos), velocity(velocity), rotation(rotation), tickObject(true) {
+    createdObjects.insert(this);
+}
+
+Object::~Object() {
+    createdObjects.erase(this);
 }
 
 double Object::getXPos() const {
