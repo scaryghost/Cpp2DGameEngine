@@ -7,12 +7,12 @@
 
 namespace etsai {
 namespace cpp2dgameengine {
-namespace core {
+namespace engine {
 
 using std::pair;
 using std::vector;
 
-class HitBox : public Object {
+class HitBox : public core::Object {
 public:
     HitBox(double xPos, double yPos);
 

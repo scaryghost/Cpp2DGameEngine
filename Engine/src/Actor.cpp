@@ -1,8 +1,8 @@
-#include "Cpp2DGameEngine/Core/Actor.h"
+#include "Cpp2DGameEngine/Engine/Actor.h"
 
 namespace etsai {
 namespace cpp2dgameengine {
-namespace core {
+namespace engine {
 
 unordered_set<Actor*> Actor::createdActors;
 

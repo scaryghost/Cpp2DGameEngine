@@ -1,10 +1,10 @@
-#include "Cpp2DGameEngine/Core/HitBox.h"
+#include "Cpp2DGameEngine/Engine/HitBox.h"
 
 #include <cmath>
 
 namespace etsai {
 namespace cpp2dgameengine {
-namespace core {
+namespace engine {
 
 using std::make_pair;
 
