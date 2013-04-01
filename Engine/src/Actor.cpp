@@ -23,14 +23,6 @@ Actor::~Actor() {
     createdActors.erase(this);
 }
 
-void Actor::checkCollisions() {
-    for(auto actor: createdActors) {
-        if (this != actor && this->hitbox->collide(actor->hitbox)) {
-            this->touch(actor);
-        }
-    }
-}
-
 unordered_set<Actor*> Actor::radiusActors() const {
     return radiusActors(hitbox->getRadius());
 }
@@ -62,6 +54,17 @@ void Actor::translate(float xOffset, float yOffset) {
 void Actor::rotate(float angle) {
     Object::rotate(angle);
     hitbox->rotate(angle);
+}
+
+bool Actor::tick(double delta) {
+    Object::tick(delta);
+    for(auto actor: radiusActors()) {
+        if (this != actor && this->hitbox->collide(actor->hitbox)) {
+            this->touch(actor);
+            actor->touch(this);
+        }
+    }
+    return true;
 }
 
 }
