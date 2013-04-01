@@ -5,7 +5,6 @@ namespace cpp2dgameengine {
 namespace core {
 
 using std::get;
-using std::make_pair;
 using std::make_tuple;
 
 unordered_set<Object*> Object::createdObjects;
@@ -31,12 +30,8 @@ Object::~Object() {
     createdObjects.erase(this);
 }
 
-float Object::getXPos() const {
-    return xPos;
-}
-
-float Object::getYPos() const {
-    return yPos;
+tuple<float, float> Object::getPosition() const {
+    return make_tuple(xPos, yPos);
 }
 
 float Object::getRotation() const {
@@ -60,13 +55,22 @@ void Object::enableTick() {
     tickObject= true;
 }    
 
+void Object::setPosition(float newXPos, float newYPos) {
+    xPos= newXPos;
+    yPos= newYPos;
+}
+
+void Object::setRotation(float newRotation) {
+    rotation= newRotation;
+}
+
 void Object::translate(float xOffset, float yOffset) {
     xPos+= xOffset;
     yPos+= yOffset;
 }
 
-void Object::rotate(float angle) {
-    rotation+= angle;
+void Object::rotate(float offset) {
+    rotation+= offset;
 }
 
 bool Object::tick(float delta) {

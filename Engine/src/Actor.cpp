@@ -46,14 +46,24 @@ unordered_set<Actor*> Actor::radiusActors(float radius) const {
     return nearbyActors;
 }
 
+void Actor::setPosition(float newXPos, float newYPos) {
+    Object::setPosition(newXPos, newYPos);
+    hitbox->setPosition(newXPos, newYPos);
+}
+
 void Actor::translate(float xOffset, float yOffset) {
     Object::translate(xOffset, yOffset);
     hitbox->translate(xOffset, yOffset);
 }
 
-void Actor::rotate(float angle) {
-    Object::rotate(angle);
-    hitbox->rotate(angle);
+void Actor::setRotation(float newRotation) {
+    Object::setRotation(newRotation);
+    hitbox->setRotation(newRotation);
+}
+
+void Actor::rotate(float offset) {
+    Object::rotate(offset);
+    hitbox->rotate(offset);
 }
 
 bool Actor::tick(float delta) {

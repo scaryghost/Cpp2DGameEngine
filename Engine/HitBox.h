@@ -22,9 +22,13 @@ public:
 
     void addBoundaryPoint(float xOffset, float yOffset);
 
-    virtual void rotate(float radians);
+    virtual void setRotation(float newRotation);
+    virtual void rotate(float offset);
+
 protected:
     vector<pair<float, float> > boundaryOffsets;
+
+    
 };
 
 }   //namespace core

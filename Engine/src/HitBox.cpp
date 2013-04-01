@@ -2,6 +2,14 @@
 
 #include <cmath>
 
+#define ROTATE(rotOffset) \
+    for(auto &boundaryOffset: boundaryOffsets) { \
+        float xNew, yNew; \
+        xNew= boundaryOffset.first * cos(rotOffset) - boundaryOffset.second * sin(rotOffset); \
+        yNew= boundaryOffset.first * sin(rotOffset) + boundaryOffset.second * cos(rotOffset); \
+        boundaryOffset= make_pair(xNew, yNew); \
+    }
+
 namespace etsai {
 namespace cpp2dgameengine {
 namespace engine {
@@ -61,14 +69,16 @@ void HitBox::addBoundaryPoint(float xOffset, float yOffset) {
     boundaryOffsets.push_back(make_pair(xOffset, yOffset));
 }
 
-void HitBox::rotate(float radians) {
-    Object::rotate(radians);
-    for(auto &offset: boundaryOffsets) {
-        float xNew, yNew;
-        xNew= offset.first * cos(radians) - offset.second * sin(radians);
-        yNew= offset.first * sin(radians) + offset.second * cos(radians);
-        offset= make_pair(xNew, yNew);
-    }
+void HitBox::setRotation(float newRotation) {
+    float deltaRot= newRotation - rotation;
+
+    Object::setRotation(newRotation);
+    ROTATE(deltaRot);
+}
+
+void HitBox::rotate(float offset) {
+    Object::rotate(offset);
+    ROTATE(offset);
 }
 
 

@@ -27,8 +27,7 @@ public:
     Object(float xPos, float yPos, float rotation);
     virtual ~Object();
 
-    float getXPos() const;
-    float getYPos() const;
+    tuple<float, float> getPosition() const;
     float getRotation() const;
 
     void addTimer(float period, const string& name, TimerFunc callback);
@@ -36,8 +35,10 @@ public:
     void disableTick();
     void enableTick();
     
+    virtual void setPosition(float newXPos, float newYPos);
     virtual void translate(float xOffset, float yOffset);
-    virtual void rotate(float angle);
+    virtual void setRotation(float newRotation);
+    virtual void rotate(float offset);
 
 protected:
     float xPos;

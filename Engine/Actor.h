@@ -20,8 +20,10 @@ public:
     unordered_set<Actor*> radiusActors() const;
     unordered_set<Actor*> radiusActors(float radius) const;
 
+    virtual void setPosition(float newXPos, float newYPos);
     virtual void translate(float xOffset, float yOffset);
-    virtual void rotate(float angle);
+    virtual void setRotation(float newRotation);
+    virtual void rotate(float offset);
 
 protected:
     HitBox *hitbox;
