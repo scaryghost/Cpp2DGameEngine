@@ -17,6 +17,8 @@ public:
     Actor(float xPos, float yPos);
     virtual ~Actor();
 
+    void checkCollisions();
+    unordered_set<Actor*> radiusActors() const;
     unordered_set<Actor*> radiusActors(double radius) const;
 
     virtual void translate(float xOffset, float yOffset);

@@ -17,11 +17,11 @@ bool HitBox::collide(HitBox const *box) const {
     for(auto it= box->boundaryOffsets.begin(); !collided && it != box->boundaryOffsets.end(); it++) {
         collided= inside(it->first + box->xPos, it->second + box->yPos);
     }
-    if (!collided) {
-        for(auto it= boundaryOffsets.begin(); !collided && it != boundaryOffsets.end(); it++) {
-            collided= box->inside(it->first + xPos, it->second + yPos);
-        }
+    collided|= inside(box->xPos, box->yPos);
+    for(auto it= boundaryOffsets.begin(); !collided && it != boundaryOffsets.end(); it++) {
+        collided= box->inside(it->first + xPos, it->second + yPos);
     }
+    collided|= box->inside(xPos, yPos);
     return collided;
 }
 
@@ -53,7 +53,7 @@ double HitBox::getRadius() const {
         }
     }
 
-    return maxDistSq;
+    return sqrt(maxDistSq);
 }
 
 void HitBox::addBoundaryPoint(double xOffset, double yOffset) {

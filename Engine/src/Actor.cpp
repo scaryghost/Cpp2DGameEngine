@@ -23,16 +23,32 @@ Actor::~Actor() {
     createdActors.erase(this);
 }
 
+void Actor::checkCollisions() {
+    for(auto actor: createdActors) {
+        if (this != actor && this->hitbox->collide(actor->hitbox)) {
+            this->touch(actor);
+        }
+    }
+}
+
+unordered_set<Actor*> Actor::radiusActors() const {
+    return radiusActors(hitbox->getRadius());
+}
+
 unordered_set<Actor*> Actor::radiusActors(double radius) const {
     unordered_set<Actor*> nearbyActors;
-    double hitboxRadiusSq(pow(hitbox->getRadius(), 2));
+    double radiusSq(pow(radius, 2));
 
     for(auto actor: createdActors) {
-        double actorRadius(actor->hitbox->getRadius());
-        double angle= 2 * PI - atan2(actor->yPos - yPos, actor->xPos - xPos);
-        double xEdge= actor->xPos + actorRadius * cos(angle), yEdge= actor->yPos + actorRadius * sin(angle);
-        if (pow(xEdge - xPos, 2) + pow(yEdge - yPos, 2) <= hitboxRadiusSq) {
-            nearbyActors.insert(actor);
+        if (actor != this) {
+            double xDelta(actor->xPos - xPos), yDelta(actor->yPos - yPos);
+            double actorRadius(actor->hitbox->getRadius());
+            double angle= atan2(yDelta, xDelta);
+
+            double xEdge= actor->xPos - actorRadius * cos(angle), yEdge= actor->yPos - actorRadius * sin(angle);
+            if (pow(xEdge - xPos, 2) + pow(yEdge - yPos, 2) <= radiusSq) {
+                nearbyActors.insert(actor);
+            }
         }
     }
     return nearbyActors;
