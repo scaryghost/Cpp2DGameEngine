@@ -13,15 +13,16 @@ HitBox::HitBox(double xPos, double yPos) : Object(xPos, yPos, 0, 0) {
 
 bool HitBox::collide(HitBox const *box) const {
     bool collided= false;
+    auto checkInside= [&collided](HitBox const *left, HitBox const *right) -> void {
+        for(auto it= right->boundaryOffsets.begin(); !collided && it != right->boundaryOffsets.end(); it++) {
+            collided= left->inside(it->first + right->xPos, it->second + right->yPos);
+        }
+        collided|= left->inside(right->xPos, right->yPos);
+    };
 
-    for(auto it= box->boundaryOffsets.begin(); !collided && it != box->boundaryOffsets.end(); it++) {
-        collided= inside(it->first + box->xPos, it->second + box->yPos);
-    }
-    collided|= inside(box->xPos, box->yPos);
-    for(auto it= boundaryOffsets.begin(); !collided && it != boundaryOffsets.end(); it++) {
-        collided= box->inside(it->first + xPos, it->second + yPos);
-    }
-    collided|= box->inside(xPos, yPos);
+    checkInside(this, box);
+    checkInside(box, this);
+
     return collided;
 }
 
