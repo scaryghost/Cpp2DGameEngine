@@ -8,7 +8,7 @@ namespace engine {
 
 using std::make_pair;
 
-HitBox::HitBox(double xPos, double yPos) : Object(xPos, yPos, 0) {
+HitBox::HitBox(float xPos, float yPos) : Object(xPos, yPos, 0) {
 }
 
 bool HitBox::collide(HitBox const *box) const {
@@ -26,7 +26,7 @@ bool HitBox::collide(HitBox const *box) const {
     return collided;
 }
 
-bool HitBox::inside(double x, double y) const {
+bool HitBox::inside(float x, float y) const {
     size_t i, j= boundaryOffsets.size() - 1;
     bool oddNodes= false;
 
@@ -45,8 +45,8 @@ bool HitBox::inside(double x, double y) const {
     return oddNodes;
 }
 
-double HitBox::getRadius() const {
-    double maxDistSq, distSq;
+float HitBox::getRadius() const {
+    float maxDistSq, distSq;
     for(auto &boundary: boundaryOffsets) {
         distSq= pow(boundary.first, 2) + pow(boundary.second, 2);
         if (distSq > maxDistSq) {
@@ -57,14 +57,14 @@ double HitBox::getRadius() const {
     return sqrt(maxDistSq);
 }
 
-void HitBox::addBoundaryPoint(double xOffset, double yOffset) {
+void HitBox::addBoundaryPoint(float xOffset, float yOffset) {
     boundaryOffsets.push_back(make_pair(xOffset, yOffset));
 }
 
-void HitBox::rotate(double radians) {
+void HitBox::rotate(float radians) {
     Object::rotate(radians);
     for(auto &offset: boundaryOffsets) {
-        double xNew, yNew;
+        float xNew, yNew;
         xNew= offset.first * cos(radians) - offset.second * sin(radians);
         yNew= offset.first * sin(radians) + offset.second * cos(radians);
         offset= make_pair(xNew, yNew);

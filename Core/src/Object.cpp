@@ -10,7 +10,7 @@ using std::make_tuple;
 
 unordered_set<Object*> Object::createdObjects;
 
-void Object::tickObjects(double delta) {
+void Object::tickObjects(float delta) {
     for(auto obj: createdObjects) {
         obj->tickObject && obj->tick(delta);
     }
@@ -22,7 +22,7 @@ void Object::drawObjects() {
     }
 }
 
-Object::Object(double xPos, double yPos, double rotation) :
+Object::Object(float xPos, float yPos, float rotation) :
     xPos(xPos), yPos(yPos), rotation(rotation), tickObject(true) {
     createdObjects.insert(this);
 }
@@ -31,19 +31,19 @@ Object::~Object() {
     createdObjects.erase(this);
 }
 
-double Object::getXPos() const {
+float Object::getXPos() const {
     return xPos;
 }
 
-double Object::getYPos() const {
+float Object::getYPos() const {
     return yPos;
 }
 
-double Object::getRotation() const {
+float Object::getRotation() const {
     return rotation;
 }
 
-void Object::addTimer(double period, const string& name, TimerFunc callback) {
+void Object::addTimer(float period, const string& name, TimerFunc callback) {
     auto info= make_tuple(period, 0, callback);
     timers.insert(make_pair(name, info));
 }
@@ -60,16 +60,16 @@ void Object::enableTick() {
     tickObject= true;
 }    
 
-void Object::translate(double xOffset, double yOffset) {
+void Object::translate(float xOffset, float yOffset) {
     xPos+= xOffset;
     yPos+= yOffset;
 }
 
-void Object::rotate(double angle) {
+void Object::rotate(float angle) {
     rotation+= angle;
 }
 
-bool Object::tick(double delta) {
+bool Object::tick(float delta) {
     for(auto timer: timers) {
         get<1>(timer.second)+= delta;
         if (get<1>(timer.second) >= get<0>(timer.second)) {

@@ -27,17 +27,17 @@ unordered_set<Actor*> Actor::radiusActors() const {
     return radiusActors(hitbox->getRadius());
 }
 
-unordered_set<Actor*> Actor::radiusActors(double radius) const {
+unordered_set<Actor*> Actor::radiusActors(float radius) const {
     unordered_set<Actor*> nearbyActors;
-    double radiusSq(pow(radius, 2));
+    float radiusSq(pow(radius, 2));
 
     for(auto actor: createdActors) {
         if (actor != this) {
-            double xDelta(actor->xPos - xPos), yDelta(actor->yPos - yPos);
-            double actorRadius(actor->hitbox->getRadius());
-            double angle= atan2(yDelta, xDelta);
+            float xDelta(actor->xPos - xPos), yDelta(actor->yPos - yPos);
+            float actorRadius(actor->hitbox->getRadius());
+            float angle= atan2(yDelta, xDelta);
 
-            double xEdge= actor->xPos - actorRadius * cos(angle), yEdge= actor->yPos - actorRadius * sin(angle);
+            float xEdge= actor->xPos - actorRadius * cos(angle), yEdge= actor->yPos - actorRadius * sin(angle);
             if (pow(xEdge - xPos, 2) + pow(yEdge - yPos, 2) <= radiusSq) {
                 nearbyActors.insert(actor);
             }
@@ -56,7 +56,7 @@ void Actor::rotate(float angle) {
     hitbox->rotate(angle);
 }
 
-bool Actor::tick(double delta) {
+bool Actor::tick(float delta) {
     Object::tick(delta);
     for(auto actor: radiusActors()) {
         if (this != actor && this->hitbox->collide(actor->hitbox)) {

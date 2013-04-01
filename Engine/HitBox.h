@@ -14,17 +14,17 @@ using std::vector;
 
 class HitBox : public core::Object {
 public:
-    HitBox(double xPos, double yPos);
+    HitBox(float xPos, float yPos);
 
     bool collide(HitBox const *box) const;
-    bool inside(double x, double y) const;
-    double getRadius() const;
+    bool inside(float x, float y) const;
+    float getRadius() const;
 
-    void addBoundaryPoint(double xOffset, double yOffset);
+    void addBoundaryPoint(float xOffset, float yOffset);
 
-    virtual void rotate(double radians);
+    virtual void rotate(float radians);
 protected:
-    vector<pair<double, double> > boundaryOffsets;
+    vector<pair<float, float> > boundaryOffsets;
 };
 
 }   //namespace core

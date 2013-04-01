@@ -19,37 +19,37 @@ using std::unordered_set;
 
 class Object {
 public:
-    static void tickObjects(double delta);
+    static void tickObjects(float delta);
     static void drawObjects();
 
     typedef function<void ()> TimerFunc;
 
-    Object(double xPos, double yPos, double rotation);
+    Object(float xPos, float yPos, float rotation);
     virtual ~Object();
 
-    double getXPos() const;
-    double getYPos() const;
-    double getRotation() const;
+    float getXPos() const;
+    float getYPos() const;
+    float getRotation() const;
 
-    void addTimer(double period, const string& name, TimerFunc callback);
+    void addTimer(float period, const string& name, TimerFunc callback);
     void removeTimer(const string& name);
     void disableTick();
     void enableTick();
     
-    virtual void translate(double xOffset, double yOffset);
-    virtual void rotate(double angle);
+    virtual void translate(float xOffset, float yOffset);
+    virtual void rotate(float angle);
 
 protected:
-    double xPos;
-    double yPos;
-    double rotation;
+    float xPos;
+    float yPos;
+    float rotation;
 
-    virtual bool tick(double delta);
+    virtual bool tick(float delta);
     virtual void draw()= 0;
 
 private:
     bool tickObject;
-    typedef tuple<double, double, TimerFunc> TimerInfo;
+    typedef tuple<float, float, TimerFunc> TimerInfo;
     unordered_map<string, TimerInfo> timers;
 
     static unordered_set<Object*> createdObjects;

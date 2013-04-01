@@ -18,7 +18,7 @@ public:
     virtual ~Actor();
 
     unordered_set<Actor*> radiusActors() const;
-    unordered_set<Actor*> radiusActors(double radius) const;
+    unordered_set<Actor*> radiusActors(float radius) const;
 
     virtual void translate(float xOffset, float yOffset);
     virtual void rotate(float angle);
@@ -26,7 +26,7 @@ public:
 protected:
     HitBox *hitbox;
 
-    virtual bool tick(double delta);
+    virtual bool tick(float delta);
     virtual void touch(Actor* actor)= 0;
 private:
     static unordered_set<Actor*> createdActors;
