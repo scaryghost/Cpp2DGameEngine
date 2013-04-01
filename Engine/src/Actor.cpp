@@ -15,7 +15,7 @@ using std::sin;
 
 unordered_set<Actor*> Actor::createdActors;
 
-Actor::Actor(float xPos, float yPos) : Object(xPos, yPos, 0, 0), hitbox(NULL) {
+Actor::Actor(float xPos, float yPos) : Object(xPos, yPos, 0), hitbox(NULL) {
     createdActors.insert(this);
 }
 

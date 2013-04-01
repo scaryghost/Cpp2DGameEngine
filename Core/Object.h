@@ -24,12 +24,11 @@ public:
 
     typedef function<void ()> TimerFunc;
 
-    Object(double xPos, double yPos, double velocity, double rotation);
+    Object(double xPos, double yPos, double rotation);
     virtual ~Object();
 
     double getXPos() const;
     double getYPos() const;
-    double getVelocity() const;
     double getRotation() const;
 
     void addTimer(double period, const string& name, TimerFunc callback);
@@ -43,7 +42,6 @@ public:
 protected:
     double xPos;
     double yPos;
-    double velocity;
     double rotation;
 
     virtual bool tick(double delta);

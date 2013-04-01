@@ -8,7 +8,7 @@ namespace engine {
 
 using std::make_pair;
 
-HitBox::HitBox(double xPos, double yPos) : Object(xPos, yPos, 0, 0) {
+HitBox::HitBox(double xPos, double yPos) : Object(xPos, yPos, 0) {
 }
 
 bool HitBox::collide(HitBox const *box) const {

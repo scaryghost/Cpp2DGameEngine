@@ -22,8 +22,8 @@ void Object::drawObjects() {
     }
 }
 
-Object::Object(double xPos, double yPos, double velocity, double rotation) :
-    xPos(xPos), yPos(yPos), velocity(velocity), rotation(rotation), tickObject(true) {
+Object::Object(double xPos, double yPos, double rotation) :
+    xPos(xPos), yPos(yPos), rotation(rotation), tickObject(true) {
     createdObjects.insert(this);
 }
 
@@ -37,10 +37,6 @@ double Object::getXPos() const {
 
 double Object::getYPos() const {
     return yPos;
-}
-
-double Object::getVelocity() const {
-    return velocity;
 }
 
 double Object::getRotation() const {
