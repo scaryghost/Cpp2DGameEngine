@@ -20,8 +20,8 @@ public:
     void print(ostream& os) const;
     void println(ostream& os) const;
 
-    Vector2D& operator += (const Vector2D& rhs);
-    Vector2D& operator -= (const Vector2D& rhs);
+    Vector2D& operator +=(const Vector2D& rhs);
+    Vector2D& operator -=(const Vector2D& rhs);
     Vector2D& operator <<=(float angle);
     Vector2D& operator >>=(float angle);
 
@@ -35,6 +35,8 @@ public:
 private:
     float vx, vy;
 };
+
+ostream& operator <<(ostream& os, const Vector2D& rhs);
 
 }   //namespace core
 }   //namespace cpp2dgameengine
