@@ -10,6 +10,8 @@ namespace etsai {
 namespace cpp2dgameengine {
 namespace engine {
 
+using core::Object;
+using core::Vector2D;
 using std::unordered_set;
 
 class Actor : public core::Object {
@@ -26,10 +28,13 @@ public:
     virtual void rotate(float offset);
 
 protected:
+    float timeAccum;
     HitBox *hitbox;
+    Vector2D velocity;
 
     virtual bool tick(float delta);
     virtual void touch(Actor* actor)= 0;
+    virtual Vector2D calcAcceleration(float time)= 0;
 private:
     static unordered_set<Actor*> createdActors;
 };

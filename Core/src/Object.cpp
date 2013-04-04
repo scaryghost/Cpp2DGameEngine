@@ -65,7 +65,8 @@ void Object::setRotation(float newRotation) {
 }
 
 void Object::translate(float xOffset, float yOffset) {
-    objPos+= Vector2D(xOffset, yOffset);
+    objPos.vx+= xOffset;
+    objPos.vy+= yOffset;
 }
 
 void Object::rotate(float offset) {
