@@ -70,7 +70,7 @@ bool Actor::tick(float delta) {
 
     timeAccum+= delta;
     Vector2D accel= calcAcceleration(timeAccum);
-    velocity+= accel;
+    velocity+= accel * delta;
     translate(velocity.vx * delta, velocity.vy * delta);
 
     for(auto actor: radiusActors()) {

@@ -40,15 +40,21 @@ void Vector2D::println(ostream& os) const {
     os << endl;
 }
 
-Vector2D& Vector2D::operator += (const Vector2D& rhs) {
+Vector2D& Vector2D::operator +=(const Vector2D& rhs) {
     vx+= rhs.vx;
     vy+= rhs.vy;
     return *this;
 }
 
-Vector2D& Vector2D::operator -= (const Vector2D& rhs) {
+Vector2D& Vector2D::operator -=(const Vector2D& rhs) {
     vx-= rhs.vx;
     vy-= rhs.vy;
+    return *this;
+}
+
+Vector2D& Vector2D::operator *=(float scale) {
+    vx*= scale;
+    vy*= scale;
     return *this;
 }
 
@@ -70,34 +76,42 @@ Vector2D& Vector2D::operator >>=(float angle) {
     return *this;
 }
 
-Vector2D Vector2D::operator +(const Vector2D& rhs) const {
-    return Vector2D(vx + rhs.vx, vy + rhs.vy);
-}
-
-Vector2D Vector2D::operator -(const Vector2D& rhs) const {
-    return Vector2D(vx - rhs.vx, vy - rhs.vy);
-}
-
-Vector2D Vector2D::operator <<(float angle) const {
-    float newAngle(atan(vy/vx) + angle);
-    float vSize(size());
-
-    return Vector2D(vSize * cos(newAngle), vSize * sin(newAngle));
-}
-
-Vector2D Vector2D::operator >>(float angle) const {
-    float newAngle(atan(vy/vx) - angle);
-    float vSize(size());
-
-    return Vector2D(vSize * cos(newAngle), vSize * sin(newAngle));
-}
-
 bool Vector2D::operator ==(const Vector2D& rhs) const {
     return (vx == rhs.vx && vy == rhs.vy);
 }
 
 bool Vector2D::operator !=(const Vector2D& rhs) const {
     return (vx != rhs.vx || vy != rhs.vy);
+}
+
+Vector2D operator +(const Vector2D& lhs, const Vector2D& rhs) {
+    return Vector2D(lhs.vx + rhs.vx, lhs.vy + rhs.vy);
+}
+
+Vector2D operator -(const Vector2D& lhs, const Vector2D& rhs) {
+    return Vector2D(lhs.vx - rhs.vx, lhs.vy - rhs.vy);
+}
+
+Vector2D operator *(const Vector2D& lhs, float scale) {
+    return Vector2D(lhs.vx * scale, lhs.vy * scale);
+}
+
+Vector2D operator *(float scale, const Vector2D& rhs) {
+    return Vector2D(scale * rhs.vx, scale * rhs.vy);
+}
+
+Vector2D operator <<(const Vector2D& lhs, float angle) {
+    float newAngle(atan(lhs.vy/lhs.vx) + angle);
+    float vSize(lhs.size());
+
+    return Vector2D(vSize * cos(newAngle), vSize * sin(newAngle));
+}
+
+Vector2D operator >>(const Vector2D& lhs, float angle) {
+    float newAngle(atan(lhs.vy/lhs.vx) - angle);
+    float vSize(lhs.size());
+
+    return Vector2D(vSize * cos(newAngle), vSize * sin(newAngle));
 }
 
 ostream& operator <<(ostream& os, const Vector2D& rhs) {
