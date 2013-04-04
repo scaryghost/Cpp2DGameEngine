@@ -1,6 +1,8 @@
 #ifndef ETSAI_CPP2DGAMEENGINE_CORE_OBJECT
 #define ETSAI_CPP2DGAMEENGINE_CORE_OBJECT
 
+#include "Cpp2DGameEngine/Core/Vector2D.h"
+
 #include <functional>
 #include <string>
 #include <tuple>
@@ -27,7 +29,7 @@ public:
     Object(float xPos, float yPos, float rotation);
     virtual ~Object();
 
-    tuple<float, float> getPosition() const;
+    Vector2D getPosition() const;
     float getRotation() const;
 
     void addTimer(float period, const string& name, TimerFunc callback);
@@ -41,8 +43,7 @@ public:
     virtual void rotate(float offset);
 
 protected:
-    float xPos;
-    float yPos;
+    Vector2D objPos;
     float rotation;
 
     virtual bool tick(float delta);

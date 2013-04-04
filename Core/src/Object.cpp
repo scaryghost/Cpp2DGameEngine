@@ -22,7 +22,7 @@ void Object::drawObjects() {
 }
 
 Object::Object(float xPos, float yPos, float rotation) :
-    xPos(xPos), yPos(yPos), rotation(rotation), tickObject(true) {
+    objPos(xPos, yPos), rotation(rotation), tickObject(true) {
     createdObjects.insert(this);
 }
 
@@ -30,8 +30,8 @@ Object::~Object() {
     createdObjects.erase(this);
 }
 
-tuple<float, float> Object::getPosition() const {
-    return make_tuple(xPos, yPos);
+Vector2D Object::getPosition() const {
+    return objPos;
 }
 
 float Object::getRotation() const {
@@ -56,8 +56,8 @@ void Object::enableTick() {
 }    
 
 void Object::setPosition(float newXPos, float newYPos) {
-    xPos= newXPos;
-    yPos= newYPos;
+    objPos.vx= newXPos;
+    objPos.vy= newYPos;
 }
 
 void Object::setRotation(float newRotation) {
@@ -65,8 +65,7 @@ void Object::setRotation(float newRotation) {
 }
 
 void Object::translate(float xOffset, float yOffset) {
-    xPos+= xOffset;
-    yPos+= yOffset;
+    objPos+= Vector2D(xOffset, yOffset);
 }
 
 void Object::rotate(float offset) {

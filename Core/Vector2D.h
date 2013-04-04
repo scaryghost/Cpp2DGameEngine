@@ -11,6 +11,7 @@ using std::ostream;
 
 class Vector2D {
 public:
+    Vector2D();
     Vector2D(float vx, float vy);
 
     Vector2D normalize() const;
@@ -32,7 +33,6 @@ public:
     bool operator ==(const Vector2D& rhs) const;
     bool operator !=(const Vector2D& rhs) const;
 
-private:
     float vx, vy;
 };
 

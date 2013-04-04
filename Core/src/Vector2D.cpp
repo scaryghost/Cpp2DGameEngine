@@ -8,6 +8,9 @@ namespace core {
 
 using std::endl;
 
+Vector2D::Vector2D() : Vector2D(0, 0) {
+}
+
 Vector2D::Vector2D(float vx, float vy) : vx(vx), vy(vy) {
 }
 
